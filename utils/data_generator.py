@@ -65,9 +65,9 @@ class AudioDataset(object):
       max_int16 = 2**15
       audio_normalized = torch.tensor(audio_as_np_float32 / max_int16)
 
-      # Convert all audio waveform tensors to 320000
-      if audio_normalized.shape[0] < 320000:
-        pad = audio_normalized[-1].repeat(320000 - audio_normalized.shape[0])
+      # Convert all audio waveform tensors to 320022
+      if audio_normalized.shape[0] < 320022:
+        pad = audio_normalized[-1].repeat(320022 - audio_normalized.shape[0])
         combined_audio_normalized = torch.cat((audio_normalized, pad))
         audio_normalized = combined_audio_normalized
 
