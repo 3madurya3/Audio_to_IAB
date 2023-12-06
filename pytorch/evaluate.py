@@ -92,6 +92,6 @@ class Evaluator(object):
     f.colorbar(disp.im_, ax=axes)
 
     filename = f"epoch_cm_{self.png_counter}.png"
-    filepath = os.path.join("/content/figures/", filename) 
+    filepath = os.path.join("/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/figures", filename) 
     
     plt.savefig(filepath)
