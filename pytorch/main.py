@@ -115,7 +115,6 @@ def train(args):
   
   full_training_start = time.time()
   val_list = [] # list to check the best f1 score to determine the best checkpoint
-  epoch_loss = [] # list to keep track of each epoch's loss
   epoch_total_loss = [] # list to keep track of each epoch's loss
   loss_arr = [] # list for the last loss of the batch
   # Training Loop
@@ -156,8 +155,7 @@ def train(args):
         total_epoch_training_time += train_time
         logging.info('Epoch #{} for Iteration #{}'.format(epoch, batch_count))
         batch_count += 1
-        logging.info('\t• Train Time: {:.3f} s'.format(train_time))
-        
+        logging.info('\t• Train Time: {:.3f} s'.format(train_time))     
         logging.info('\t• Loss: {:.3f}'.format(loss.item())) 
         logging.info('------------------------------------') 
         batch_loss.append(loss.item())
@@ -189,17 +187,20 @@ def train(args):
           torch.save(checkpoint, checkpoint_path)
           logging.info('\t• Model saved to {}'.format(checkpoint_path)) 
       logging.info('------------------------------------') 
-      epoch_loss.append(total_loss)
+      epoch_total_loss.append(total_loss)
       average_loss = total_loss / len(train_loader)
       logging.info('Average Loss for Epoch #{}: {:.3f}'.format(epoch, average_loss))
       logging.info('Total Training Time for Epoch #{}: {:.3f} s'.format(epoch, total_epoch_training_time))
 
   logging.info('------------------------------------')                  
   total_training_time = time.time() - full_training_start 
-  logging.info('Average Overall Loss: {:.3f} s'.format(sum(epoch_loss)/len(epoch_loss))) 
+  logging.info('Average Overall Loss: {:.3f} s'.format(sum(epoch_total_loss)/len(epoch_total_loss))) 
   logging.info('Average Overall F1: {:.3f} s'.format(sum(val_list)/len(val_list))) 
   logging.info('Full Training Time: {:.3f} s'.format(total_training_time)) 
-  plot_loss_and_f1(epoch_loss, val_list, workspace)
+    
+  logging.info('Loss List: {}'.format(loss_arr)) 
+  logging.info('F1 List: {}'.format(val_list)) 
+  plot_loss_and_f1(loss_arr, val_list, workspace)
 
   # Find and Load in Best Checkpoint (based off F1 Score)
   best_checkpoint = np.argmax(np.array(val_list)) 
