@@ -111,11 +111,13 @@ def train(args):
       eps=1e-08, weight_decay=0., amsgrad=True)
     
   # Evaluator
-  evaluator = Evaluator(model=model)
+  evaluator = Evaluator(model=model, workspace)
   
   full_training_start = time.time()
   val_list = [] # list to check the best f1 score to determine the best checkpoint
   epoch_loss = [] # list to keep track of each epoch's loss
+  epoch_total_loss = [] # list to keep track of each epoch's loss
+  loss_arr = [] # list for the last loss of the batch
   # Training Loop
   for epoch in range(1, max_epoch + 1):
       print()
@@ -125,6 +127,7 @@ def train(args):
       train_bgn_time = time.time()
       total_loss = 0
       total_epoch_training_time = 0
+      batch_loss = []
       for batch_data_dict in train_loader:
           
         # Move data to GPU
@@ -156,7 +159,10 @@ def train(args):
         logging.info('\t• Train Time: {:.3f} s'.format(train_time))
         
         logging.info('\t• Loss: {:.3f}'.format(loss.item())) 
-
+        logging.info('\t• Loss: {:.3f}'.format(loss.item())) 
+        logging.info('------------------------------------') 
+        batch_loss.append(loss.item())
+      loss_arr.append(batch_loss[-1])
       # Evaluation for every 5th epoch
       if epoch % 5 == 0 and epoch > 0:
           model.eval()
@@ -194,7 +200,7 @@ def train(args):
   logging.info('Average Overall Loss: {:.3f} s'.format(sum(epoch_loss)/len(epoch_loss))) 
   logging.info('Average Overall F1: {:.3f} s'.format(sum(val_list)/len(val_list))) 
   logging.info('Full Training Time: {:.3f} s'.format(total_training_time)) 
-  plot_loss_and_f1(epoch_loss, val_list)
+  plot_loss_and_f1(epoch_loss, val_list, workspace)
 
   # Find and Load in Best Checkpoint (based off F1 Score)
   best_checkpoint = np.argmax(np.array(val_list)) 
@@ -217,31 +223,24 @@ def train(args):
   testing_time = time.time() - testing_begin_time
   logging.info('Total Testing Time: {:.3f} s'.format(testing_time))
 
-def plot_loss_and_f1(loss_arr, f1_arr):
-
-  f1_range = list(range(5, len(f1_arr)+1, 5))  # for every 5th epoch
-  loss_range = list(range(1, len(loss_arr)+1, 1))  # for all 100 epochs
-
-  fig, ax1 = plt.subplots(figsize=(10, 5))
-
-  ax1.plot(loss_arr, loss_range, marker='o', linestyle='-', color='b', label='F1 Score')
-  ax1.set_xlabel('Epochs')
-  ax1.set_ylabel('F1 Score', color='b')
-  ax1.tick_params('y', colors='b')
-
-  ax2 = ax1.twinx()
-  ax2.plot(f1_arr, f1_range, marker='o', linestyle='-', color='r', label='Loss')
-  ax2.set_ylabel('Loss', color='r')
-  ax2.tick_params('y', colors='r')
-
-  lines, labels = ax1.get_legend_handles_labels()
-  lines2, labels2 = ax2.get_legend_handles_labels()
-  ax2.legend(lines + lines2, labels + labels2, loc='upper left')
-
-  plt.title('F1 Score and Loss over Epochs')
-  plt.grid(True)
+def plot_loss_and_f1(loss_arr, f1_arr, workspace):
+  epochs = np.arrange(1, len(loss_arr) + 1)
+  plt.plot(epochs, loss_values, label='Loss', color = 'blue')
+  
+  epochs_f1 = np.linspace(1, len(loss_arr), len(f1_arr))
+  plt.plot(epochs_f1, f1_values, label='F1', marker='o', linestyle='--', color = 'red') 
+  plt.xlabel('Epochs')
+  plt.ylabel('Values')
+  plt.title('Loss and F1 Score Over Epochs')
+  plt.legend()
+  
   filename = f"loss_and_f1_plot.png"
-  filepath = os.path.join("/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/figures", filename) 
+  folder = f"{workspace}/figures"
+  
+  if not os.path.exists(folder):
+      os.makedirs(folder)
+  # filepath = os.path.join("/content/figures/", filename) 
+  filepath = os.path.join(folder, filename) 
   
   plt.savefig(filepath)
   
