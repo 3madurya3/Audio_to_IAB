@@ -194,7 +194,7 @@ def train(args):
   logging.info('Average Overall Loss: {:.3f} s'.format(sum(epoch_loss)/len(epoch_loss))) 
   logging.info('Average Overall F1: {:.3f} s'.format(sum(val_list)/len(val_list))) 
   logging.info('Full Training Time: {:.3f} s'.format(total_training_time)) 
-  # plot_loss_and_f1(epoch_loss, val_list)
+  plot_loss_and_f1(epoch_loss, val_list)
 
   # Find and Load in Best Checkpoint (based off F1 Score)
   best_checkpoint = np.argmax(np.array(val_list)) 
