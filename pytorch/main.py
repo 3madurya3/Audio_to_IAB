@@ -159,7 +159,6 @@ def train(args):
         logging.info('\t• Train Time: {:.3f} s'.format(train_time))
         
         logging.info('\t• Loss: {:.3f}'.format(loss.item())) 
-        logging.info('\t• Loss: {:.3f}'.format(loss.item())) 
         logging.info('------------------------------------') 
         batch_loss.append(loss.item())
       loss_arr.append(batch_loss[-1])
