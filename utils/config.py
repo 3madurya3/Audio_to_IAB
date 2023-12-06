@@ -14,9 +14,8 @@ ref = 1.0
 amin = 1e-10
 top_db = None
 
-labels = ['blues', 'classical', 'country', 'disco', 'hiphop', 'jazz', 'metal', 
-    'pop', 'reggae', 'rock']
+labels = ["Automotive", "Food & Drink", "Pets", "War and Conflicts", "Attractions", "Books and Literature", "Crime", "Disasters", "Entertainment", "Events", "Family and Relationships", "Healthy Living", "Holidays", "Home & Garden", "Medical Health", "Religion & Spirituality", "Science", "Sports", "Technology & Computing", "Travel"]
     
 lb_to_idx = {lb: idx for idx, lb in enumerate(labels)}
 idx_to_lb = {idx: lb for idx, lb in enumerate(labels)}
-classes_num = 5 # changed to 5
+classes_num = 20 # changed to 20
