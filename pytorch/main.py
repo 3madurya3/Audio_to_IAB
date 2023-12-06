@@ -200,7 +200,7 @@ def train(args):
   best_checkpoint = np.argmax(np.array(val_list)) 
   best_checkpoint_idx = (best_checkpoint+1) * 5
   logging.info('Best Checkpoint Found at Epoch {}'.format(best_checkpoint_idx))  
-  best_checkpoint_path = f"/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/checkpoints/main/holdout_fold=1/Transfer_Cnn14/pretrain=True/loss_type=clip_nll/augmentation=none/batch_size=128/freeze_base=False/{best_checkpoint_idx}_epochs.pth"
+  best_checkpoint_path = f"/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/checkpoints/main/holdout_fold=1/Transfer_Cnn14/pretrain=True/loss_type=clip_nll/augmentation=none/batch_size=16/freeze_base=False/{best_checkpoint_idx}_epochs.pth"
   model.load_state_dict(torch.load(best_checkpoint_path)['model']) # choose the best checkpoint and load it
 
   # Dataset and Dataloader for Testing
