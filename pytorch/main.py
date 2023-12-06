@@ -177,7 +177,7 @@ def train(args):
       if epoch % 5 == 0 and epoch > 0:
           checkpoint = {
               'epoch': epoch, 
-              'model': model.module.state_dict() }
+              'model': model.state_dict() }
 
           checkpoint_path = os.path.join(checkpoints_dir, '{}_epochs.pth'.format(epoch))
                       
@@ -194,11 +194,11 @@ def train(args):
   logging.info('Average Overall Loss: {:.3f} s'.format(sum(epoch_loss)/len(epoch_loss))) 
   logging.info('Average Overall F1: {:.3f} s'.format(sum(val_list)/len(val_list))) 
   logging.info('Full Training Time: {:.3f} s'.format(total_training_time)) 
-  plot_loss_and_f1(epoch_loss, val_list)
+  # plot_loss_and_f1(epoch_loss, val_list)
 
   # Find and Load in Best Checkpoint (based off F1 Score)
   best_checkpoint = np.argmax(np.array(val_list)) 
-  best_checkpoint_idx = best_checkpoint * 5
+  best_checkpoint_idx = (best_checkpoint+1) * 5
   logging.info('Best Checkpoint Found at Epoch {}'.format(best_checkpoint_idx))  
   best_checkpoint_path = f"/content/checkpoints/main/holdout_fold=1/Transfer_Cnn14/pretrain=True/loss_type=clip_nll/augmentation=none/batch_size=32/freeze_base=False/{best_checkpoint_idx}_epochs.pth"
   model.load_state_dict(torch.load(best_checkpoint_path)['model']) # choose the best checkpoint and load it
@@ -219,8 +219,8 @@ def train(args):
 
 def plot_loss_and_f1(loss_arr, f1_arr):
 
-  f1_range = list(range(5, 101, 5))  # for every 5th epoch
-  loss_range = list(range(1, 101, 1))  # for all 100 epochs
+  f1_range = list(range(5, len(f1_arr)+1, 5))  # for every 5th epoch
+  loss_range = list(range(1, len(loss_arr)+1, 1))  # for all 100 epochs
 
   fig, ax1 = plt.subplots(figsize=(10, 5))
 
@@ -241,7 +241,7 @@ def plot_loss_and_f1(loss_arr, f1_arr):
   plt.title('F1 Score and Loss over Epochs')
   plt.grid(True)
   filename = f"loss_and_f1_plot.png"
-  filepath = os.path.join("/content/figures/", filename) 
+  filepath = os.path.join("/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/figures", filename) 
   
   plt.savefig(filepath)
   
