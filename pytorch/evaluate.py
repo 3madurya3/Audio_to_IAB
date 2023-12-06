@@ -23,8 +23,9 @@ class Evaluator(object):
   References:
     Adapated code to print multiple confusion matrices from https://stackoverflow.com/questions/62722416/plot-confusion-matrix-for-multilabel-classifcation-python
   """
-  def __init__(self, model):
+  def __init__(self, model, workspace):
       self.model = model
+      self.workspace = workspace
       self.png_counter = 5
       self.classes = ["Automotive", "Food & Drink", "Pets", "War and Conflicts", "Attractions", "Books and Literature", "Crime", "Disasters", "Entertainment", "Events", "Family and Relationships", "Healthy Living", "Holidays", "Home & Garden", "Medical Health", "Religion & Spirituality", "Science", "Sports", "Technology & Computing", "Travel"]
       self.num_classes = len(self.classes)
@@ -92,6 +93,9 @@ class Evaluator(object):
     f.colorbar(disp.im_, ax=axes)
 
     filename = f"epoch_cm_{self.png_counter}.png"
-    filepath = os.path.join("/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/figures", filename) 
-    
+    # filepath = os.path.join("/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/figures", filename) 
+    folder = f"{workspace}/figures"
+    if not os.path.exists(folder):
+      os.makedirs(folder)
+    filepath = os.path.join(folder, filename)
     plt.savefig(filepath)
