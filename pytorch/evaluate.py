@@ -80,6 +80,8 @@ class Evaluator(object):
     # Confusion Matrix Order:
     # True Neg (Top-Left), False Pos (Top-Right), False Neg (Bottom-Left), True Pos (Bottom-Right)
     for i in range(num_classes):
+        row = i // 5
+        col = i % 5
         disp = ConfusionMatrixDisplay(confusion_matrix(dataset_label[:, i],
                                                       model_prediction[:, i]),
                                       display_labels=[0, i])
@@ -101,7 +103,7 @@ class Evaluator(object):
 
     filename = f"epoch_cm_{self.png_counter}.png"
     # filepath = os.path.join("/content/drive/MyDrive/GumGum/Notebooks/20_labels_results/figures", filename) 
-    folder = f"{workspace}/figures"
+    folder = f"{self.workspace}/figures"
     if not os.path.exists(folder):
       os.makedirs(folder)
     filepath = os.path.join(folder, filename)
