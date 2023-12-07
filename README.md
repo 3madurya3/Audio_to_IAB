@@ -23,9 +23,6 @@ Or run the commands in runme.sh line by line. The commands includes:
 ## Model
 A 14-layer CNN of PANNs is fine-tuned. We use 10-fold cross validation for IAB label classification. That is, 900 audio clips are used for training, and 100 audio clips are used for validation.
 
-## Results
-
-
 ## Citation
 
 [1] Kong, Qiuqiang, Yin Cao, Turab Iqbal, Yuxuan Wang, Wenwu Wang, and Mark D. Plumbley. "PANNs: Large-scale pretrained audio neural networks for audio pattern recognition." arXiv preprint arXiv:1912.10211 (2019).
