@@ -6,6 +6,8 @@ View our full report here on how we created the dataset and how we created our m
 
 View our datasets (for both 5 and 20 labels) [here](https://drive.google.com/drive/folders/1K6R_9ub4CpEoHgbHYRCNCHtHWKog48ec?usp=sharing)
 
+We also expanded this model to use 20 IAB labels [here](https://github.com/meganchung4444/Audio_to_5_IAB_labels)
+
 **1. Requirements** 
 
 python 3.6 + pytorch 1.0
