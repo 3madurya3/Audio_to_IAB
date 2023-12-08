@@ -8,6 +8,8 @@ View our datasets (for both 5 and 20 labels) [here](https://drive.google.com/dri
 
 We also expanded this model to use 20 IAB labels [here](https://github.com/meganchung4444/Audio_to_5_IAB_labels)
 
+View the notebook [here](https://colab.research.google.com/drive/16h03bksd_rqkewl3_EiuONmNbDBaQ4Xn?usp=sharing) if you would like to run it yourself
+
 **1. Requirements** 
 
 python 3.6 + pytorch 1.0
