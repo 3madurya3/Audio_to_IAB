@@ -4,6 +4,9 @@ IAB label classification is a task to classify audio clips into different [IAB l
 
 View our full report here on how we created the dataset and how we created our model [here](https://docs.google.com/presentation/d/10LhEUxOM6hpeT8t5M1WKPEtvoh_ltfPXeEt6nOOtCw4/edit?usp=sharing)
 
+View the code we developed to create the datasets [here]https://drive.google.com/drive/folders/1ZqZYxEkZDbvqTyOy2B775DHvdggzeZj-?usp=sharing
+View reproducible steps we made to use our dataset creation/processing code [here]https://docs.google.com/document/d/1pQ1vQdil9zjRclzEl9cMfUElAkMGtnfrI-ooycJaLHk/edit?usp=drive_link 
+
 View our datasets and our Audioset labels to IAB labels mappings (for both 5 and 20 labels) [here](https://drive.google.com/drive/folders/1K6R_9ub4CpEoHgbHYRCNCHtHWKog48ec?usp=sharing)
 
 We also expanded this model to use 20 IAB labels [here](https://github.com/meganchung4444/Audio_to_5_IAB_labels)
